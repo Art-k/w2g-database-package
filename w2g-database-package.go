@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	guuid "github.com/satori/go.uuid"
 	"time"
+	"unicode"
 )
 
 type Model struct {
@@ -23,4 +24,23 @@ func (base *Model) BeforeCreate(scope *gorm.Scope) error {
 func GetHash() string {
 	id, _ := guuid.NewV4()
 	return id.String()
+}
+
+func ConvertStructField2DatabaseField(s string) string {
+
+	var field string
+
+	for ind, ch := range s {
+		if unicode.IsUpper(ch) {
+			if ind == 0 {
+				field += string(unicode.ToLower(ch))
+			} else {
+				field = field + "_" + string(unicode.ToLower(ch))
+			}
+		} else {
+			field += string(ch)
+		}
+	}
+
+	return field
 }
