@@ -13,7 +13,7 @@ type Model struct {
 	UpdatedAt time.Time
 	UpdatedBy string
 	DeletedAt *time.Time `json:"-"`
-	// DeletedBy string
+	DeletedBy string
 }
 
 func (base *Model) BeforeCreate(scope *gorm.Scope) error {
